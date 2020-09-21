@@ -30,10 +30,12 @@ def find_anagrams(words):
     """
     anagrams = {}
     for word in words:
-        anagrams[alphabetize(word)] = [
-            w for w in words if alphabetize(w) == alphabetize(word)
-        ]
+        if alphabetize(word) not in anagrams:
+            anagrams[alphabetize(word)] = []
+    for word in words:
+        anagrams[alphabetize(word)].append(word)
 
+    # w for w in words if alphabetize(w) == alphabetize(word)
     return anagrams
 
 
@@ -49,8 +51,8 @@ def main(args):
     anagram_dict = find_anagrams(words)
     t2 = time.time()
     print(t2 - t1)
-    # for k, v in anagram_dict.items():
-    #    print(f"{k} : {v}")
+    for k, v in anagram_dict.items():
+        print(f"{k} : {v}")
 
 
 if __name__ == "__main__":
