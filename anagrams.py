@@ -10,9 +10,10 @@ for an arbitrary list of strings.
 
 # Your name here, and any other people/sources who helped.
 # Give credit where credit is due.
-__author__ = "???"
+__author__ = "Andrew Canter"
 
 import sys
+import time
 
 
 def alphabetize(string):
@@ -27,11 +28,14 @@ def find_anagrams(words):
     Example:
     {'dgo': ['dog'], 'act': ['cat', 'act']}
     """
-    anagrams = {
-        alphabetize(word): [
-            w for w in words
-            if alphabetize(w) == alphabetize(word)]
-        for word in words}
+    anagrams = {}
+    for word in words:
+        if alphabetize(word) not in anagrams:
+            anagrams[alphabetize(word)] = []
+    for word in words:
+        anagrams[alphabetize(word)].append(word)
+
+    # w for w in words if alphabetize(w) == alphabetize(word)
     return anagrams
 
 
@@ -43,7 +47,10 @@ def main(args):
 
     with open(args[0]) as f:
         words = f.read().split()
+    t1 = time.time()
     anagram_dict = find_anagrams(words)
+    t2 = time.time()
+    print(t2 - t1)
     for k, v in anagram_dict.items():
         print(f"{k} : {v}")
 
